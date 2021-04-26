@@ -32,6 +32,15 @@ app.post("/:hashFilename", async (req, res) => {
   }
 });
 
+app.delete("/:hashFilename", async (req, res) => {
+  const [hash, fileType] = req.params.hashFilename.split(".");
+  try {
+    res.send(await db.del(hash));
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
