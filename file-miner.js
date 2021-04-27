@@ -17,11 +17,17 @@ watcher.on("add", async (path) => {
     const id = path.split("/").pop().split(".")[0];
     try {
       JSON.parse(data).forEach(async (obj) => {
-        await axios.post(`https://0.aviary.one/${id}.json`, { ...obj });
+        console.log("sending!");
+        try {
+          await axios.post(`http://localhost:3000/${id}.json`, { ...obj });
+        } catch (e) {
+          console.log(e);
+        }
       });
       fs.unlinkSync(path);
     } catch (e) {
       console.log(JSON.stringify(e));
+      fs.unlinkSync(path);
     }
   });
 });
