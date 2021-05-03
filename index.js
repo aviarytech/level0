@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { getInfo, getHash, addRotation, deleteHash, reset, explainDB } = require("./database");
+const { getInfo, getHash, addRotation, deleteHash, reset } = require("./database");
 const { mineAndInsertValue, mineTriple } = require("./miner");
 const { sha256 } = require("./utils");
 const logger = require("./logger");
@@ -25,25 +25,7 @@ app.post("/mine", async (req, res) => {
 
       let i = 0;
       for (const line of rdf) {
-        console.log(`mining something new`);
-        rsmq.sendMessage(
-          {
-            qname: "workqueue",
-            message: JSON.stringify({
-              subject: line.subject.value,
-              predicate: line.predicate.value,
-              object: line.object.value,
-            }),
-          },
-          function (err, resp) {
-            if (err) {
-              console.error(err);
-              return;
-            }
-
-            console.log("Message sent. ID:", resp);
-          }
-        );
+        await mineTriple(line.subject.value, line.predicate.value, line.object.value);
         i++;
       }
 
@@ -64,10 +46,6 @@ app.post("/destroy", async (req, res) => {
 
 app.get("/info", async (req, res) => {
   res.send(await getInfo());
-});
-
-app.get("/explain", async (req, res) => {
-  res.send(await explainDB());
 });
 
 app.get("/:hashFilename", async (req, res) => {
