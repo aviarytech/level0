@@ -38,4 +38,8 @@ const deleteHash = async (hash) => {
   return await db.del(hash);
 };
 
-module.exports = { addRotation, getHash, deleteHash, getInfo };
+const reset = async () => {
+  return await db.clear();
+};
+
+module.exports = { addRotation, getHash, deleteHash, getInfo, reset };
