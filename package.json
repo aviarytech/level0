@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./index.js"
+    "dev": "nodemon --config nodemon.json ./index.js",
+    "mine": "nodemon --config nodemon.json ./start-miner.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,8 +17,10 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonld": "^5.2.0",
+    "jsonld-document-loader": "^1.2.0",
     "level": "^7.0.0",
     "nodemon": "^2.0.7",
+    "rdf-canonize": "^3.0.0",
     "redis": "^3.1.2",
     "rsmq": "^0.12.3",
     "rsmq-worker": "^0.5.2",

@@ -1,4 +1,4 @@
-const { addRotation, getHash } = require("./database");
+const { addRotation, getHash } = require("./redis");
 const { sha256 } = require("./utils");
 
 const TARGET = "21e8";
@@ -36,7 +36,8 @@ const mineAndInsertValue = async (source, data, username = "anonymous", target =
   try {
     console.log(`rotation: ${JSON.stringify(newRotation)}`);
     return await addRotation(source, newRotation);
-  } catch {
+  } catch (e) {
+    console.log(e);
     throw Error(`Failed to mine on ${source}`);
   }
 };
@@ -47,10 +48,10 @@ const mineTriple = async (subject, predicate, obj) => {
   const predicateSource = await getHash(predHash);
   if (!predicateSource) {
     console.log(`mining new predicate: ${predicate}`);
-    await mineAndInsertValue(predHash, predicate, "anonymous", "21e8");
+    return await mineAndInsertValue(predHash, predicate, "anonymous", "21e8");
   }
 
-  await mineAndInsertValue(subjHash, obj, "anonymous", predHash.substr(0, 5));
+  return await mineAndInsertValue(subjHash, obj, "anonymous", predHash.substr(0, 5));
 };
 
 const mineJson = async (source, inputDoc) => {
