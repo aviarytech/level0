@@ -1,6 +1,5 @@
 const asyncRedis = require("async-redis");
 const jsonld = require("jsonld");
-const canonize = require("rdf-canonize");
 const { sha256 } = require("./utils");
 // const { DocumentLoader } = require("./documentLoader/documentLoader");
 
