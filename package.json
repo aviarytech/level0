@@ -24,5 +24,8 @@
     "rsmq": "^0.12.3",
     "rsmq-worker": "^0.5.2",
     "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "cypress": "^7.4.0"
   }
 }

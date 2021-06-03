@@ -1,18 +1,20 @@
 const asyncRedis = require("async-redis");
 const jsonld = require("jsonld");
 const { sha256 } = require("./utils");
+
+const host = process.env.REDIS_HOST ?? "127.0.0.1";
 // const { DocumentLoader } = require("./documentLoader/documentLoader");
 
 const client = asyncRedis.createClient({
-  // host: "master.cash.aezfjs.cac1.cache.amazonaws.com",
-  // host: "replica.cache.aezfjs.cac1.cache.amazonaws.com",
-  // password: "a515520568263c6460a2819b9bd8658e5fb50be3f0f66a2ca318b582d3659a0d",
-  // password: "on ~* +@all",
-  // read,
+  host,
 });
 
 client.on("error", function (error) {
   console.error(error);
+});
+
+client.on("connect", function (error) {
+  console.log(`connected to ${host}`);
 });
 
 const getInfo = async () => {
