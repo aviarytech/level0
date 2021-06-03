@@ -2,7 +2,7 @@ const asyncRedis = require("async-redis");
 const jsonld = require("jsonld");
 const { sha256 } = require("./utils");
 
-const host = process.env.REDIS_HOST ?? "127.0.0.1";
+const host = process.env.REDIS_HOST || "127.0.0.1";
 // const { DocumentLoader } = require("./documentLoader/documentLoader");
 
 const client = asyncRedis.createClient({
