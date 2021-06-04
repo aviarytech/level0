@@ -18,7 +18,7 @@ const client =
             host,
           },
         ],
-        { redisOptions: { password } }
+        { scaleReads: "slave", redisOptions: { password } }
       );
 
 client.on("error", function (error) {
