@@ -18,7 +18,7 @@ const client =
             host,
           },
         ],
-        { password }
+        { redisOptions: { password } }
       );
 
 client.on("error", function (error) {
