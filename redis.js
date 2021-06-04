@@ -1,4 +1,4 @@
-const asyncRedis = require("async-redis");
+const Redis = require("ioredis");
 const jsonld = require("jsonld");
 const { sha256 } = require("./utils");
 
@@ -6,10 +6,16 @@ const host = process.env.REDIS_HOST || "127.0.0.1";
 const password = process.env.PASSWORD || "";
 // const { DocumentLoader } = require("./documentLoader/documentLoader");
 
-const client = asyncRedis.createClient({
-  host,
-  password,
-});
+const client =
+  host === "127.0.0.1"
+    ? new Redis({
+        host,
+        password,
+      })
+    : new Redis.Cluster({
+        host,
+        password,
+      });
 
 client.on("error", function (error) {
   console.error(error);
