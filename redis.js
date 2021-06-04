@@ -12,10 +12,12 @@ const client =
         host,
         password,
       })
-    : new Redis.Cluster({
-        host,
-        password,
-      });
+    : new Redis.Cluster([
+        {
+          host,
+          password,
+        },
+      ]);
 
 client.on("error", function (error) {
   console.error(error);
