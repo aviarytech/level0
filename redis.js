@@ -7,7 +7,7 @@ const password = process.env.PASSWORD || "";
 // const { DocumentLoader } = require("./documentLoader/documentLoader");
 
 const client =
-  host === "127.0.0.1"
+  host === "127.0.0.1" || process.env.MODE === "standalone"
     ? new Redis({
         host,
         password,
